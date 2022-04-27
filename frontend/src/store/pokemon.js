@@ -1,5 +1,6 @@
 import PokemonBrowser from '../components/PokemonBrowser';
 import { LOAD_ITEMS, REMOVE_ITEM, ADD_ITEM } from './items';
+import { useParams } from 'react-router-dom';
 
 
 const LOAD = 'pokemon/LOAD';
@@ -39,6 +40,17 @@ export const getPokemonTypes = () => async dispatch => {
     dispatch(loadTypes(types));
   }
 };
+
+export const addPokemon = () => async dispatch => {
+  const {id} = useParams();
+
+  const response = await fetch(`/api/pokemon/${id}`);
+
+  if (response.ok) {
+    const types = await response.json();
+    dispatch(addOnePokemon(types));
+  }
+}
 
 const initialState = {
   list: [],
