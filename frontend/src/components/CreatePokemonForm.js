@@ -115,7 +115,7 @@ const CreatePokemonForm = ({ hideForm }) => {
             <option key={type}>{type}</option>
           )}
         </select>
-        <button type="submit">Create new Pokemon</button>
+        <button type="submit" onClick={handleSubmit}>Create new Pokemon</button>
         <button type="button" onClick={handleCancelClick}>Cancel</button>
       </form>
     </section>

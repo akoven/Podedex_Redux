@@ -32,8 +32,8 @@ export const getPokemon = () => async dispatch => {
   }
 };
 
-export const getOnePokemon = (id) => async dispatch =>{//this is the thunk
-  const response = await fetch (`/api/pokemon/${id}`);
+export const getOnePokemon = (id) => async dispatch => {//this is the thunk
+  const response = await fetch(`/api/pokemon/${id}`);
 
   if (response.ok) {
     const pokemon = await response.json();
@@ -50,10 +50,14 @@ export const getPokemonTypes = () => async dispatch => {
   }
 };
 
+
+
 export const addPokemon = (payload) => async dispatch => {
 
+  console.log("============")
+
   const response = await fetch(`/api/pokemon/:id`, {
-    method:"POST",
+    method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
@@ -61,6 +65,8 @@ export const addPokemon = (payload) => async dispatch => {
   });
 
   if (response.ok) {
+
+    console.log("IN THUNK")
     const pokemon = await response.json();
     dispatch(addOnePokemon(pokemon));
     return pokemon;
