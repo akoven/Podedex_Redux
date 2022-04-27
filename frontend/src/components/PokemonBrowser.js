@@ -22,9 +22,9 @@ const PokemonBrowser = () => {
     dispatch(getPokemon())
   }, []);
 
-  useEffect(() => {
-    dispatch(addPokemon())
-  },[]);
+  // useEffect(() => {
+  //   dispatch(addPokemon())
+  // },[pokemonId]);
 
 
   if (!pokemon) {

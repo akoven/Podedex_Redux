@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import PokemonItems from './PokemonItems';
 import EditPokemonForm from './EditPokemonForm';
 import ItemForm from './ItemForm';
+import { useDispatch } from 'react-redux';
+import { getOnePokemon } from '../store/pokemon';
 
 const PokemonDetail = () => {
   const { pokemonId } = useParams();
@@ -11,7 +13,10 @@ const PokemonDetail = () => {
   const [showEditPokeForm, setShowEditPokeForm] = useState(false);
   const [editItemId, setEditItemId] = useState(null);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
+    dispatch(getOnePokemon(pokemonId));
     setShowEditPokeForm(false);
     setEditItemId(null);
   }, [pokemonId]);
@@ -24,16 +29,16 @@ const PokemonDetail = () => {
 
   if (editItemId) {
     content = (
-      <ItemForm 
-        itemId={editItemId} 
-        hideForm={() => setEditItemId(null)} 
+      <ItemForm
+        itemId={editItemId}
+        hideForm={() => setEditItemId(null)}
       />
     );
   } else if (showEditPokeForm && pokemon.captured) {
     content = (
-      <EditPokemonForm 
-        pokemon={pokemon} 
-        hideForm={() => setShowEditPokeForm(false)} 
+      <EditPokemonForm
+        pokemon={pokemon}
+        hideForm={() => setShowEditPokeForm(false)}
       />
     );
   } else {
@@ -66,7 +71,7 @@ const PokemonDetail = () => {
         </div>
         <div>
           <h2>
-            Items 
+            Items
             <button> + </button>
           </h2>
           <table>

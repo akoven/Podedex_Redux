@@ -1,6 +1,6 @@
-import PokemonBrowser from '../components/PokemonBrowser';
+// import PokemonBrowser from '../components/PokemonBrowser';
 import { LOAD_ITEMS, REMOVE_ITEM, ADD_ITEM } from './items';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 
 
 const LOAD = 'pokemon/LOAD';
@@ -17,7 +17,7 @@ const loadTypes = types => ({
   types
 });
 
-const addOnePokemon = pokemon => ({
+const addOnePokemon = pokemon => ({//action function
   type: ADD_ONE,
   pokemon
 });
@@ -32,6 +32,15 @@ export const getPokemon = () => async dispatch => {
   }
 };
 
+export const getOnePokemon = (id) => async dispatch =>{//this is the thunk
+  const response = await fetch (`/api/pokemon/${id}`);
+
+  if (response.ok) {
+    const pokemon = await response.json();
+    dispatch(addOnePokemon(pokemon));
+  }
+}
+
 export const getPokemonTypes = () => async dispatch => {
   const response = await fetch(`/api/pokemon/types`);
 
@@ -41,14 +50,20 @@ export const getPokemonTypes = () => async dispatch => {
   }
 };
 
-export const addPokemon = () => async dispatch => {
-  const {id} = useParams();
+export const addPokemon = (payload) => async dispatch => {
 
-  const response = await fetch(`/api/pokemon/${id}`);
+  const response = await fetch(`/api/pokemon/:id`, {
+    method:"POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  });
 
   if (response.ok) {
-    const types = await response.json();
-    dispatch(addOnePokemon(types));
+    const pokemon = await response.json();
+    dispatch(addOnePokemon(pokemon));
+    return pokemon;
   }
 }
 
